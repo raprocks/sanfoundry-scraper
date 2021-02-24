@@ -17,6 +17,5 @@ def pagescrape(url: str):
 
 if __name__ == '__main__':
     results = pagescrape(
-        "https://www.sanfoundry.com/1000-object-oriented-p\
-            rogramming-oops-questions-answers/")
+        "https://www.sanfoundry.com/1000-object-oriented-programming-oops-questions-answers/")
     print(results)
