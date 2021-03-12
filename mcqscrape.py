@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from pprint import pprint
 
 
 def mcqscrape(url: str):
@@ -35,5 +36,5 @@ def mcqscrape(url: str):
 
 
 if __name__ == '__main__':
-    print(mcqscrape(
+    pprint(mcqscrape(
         'https://www.sanfoundry.com/object-oriented-programming-problems/'))
