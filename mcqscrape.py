@@ -9,7 +9,7 @@ from requests.api import head
 def write_to_html(data, filename, group_name):
     if not os.path.exists(group_name):
         os.mkdir(group_name)
-    with open(f"./{group_name}/{filename}.html", "w+") as file:
+    with open(f"./{group_name}/{filename}.html", "w+", encoding="utf-8") as file:
         file.write(str(data))
 
 
