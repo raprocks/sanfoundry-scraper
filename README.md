@@ -1,12 +1,20 @@
 # sanfoundry-scraper
 
-Extarcts the main content html to separate files based on the Subject Url you input 
+Extracts all MCQs of a subject that you input the link of.
 
-Change PAGE_URL in main.py and run it to get a folder of all the mcqs of the subject
+run the main.py file after getting the code using the Download zip button or following this [link](https://github.com/raprocks/sanfoundry-scraper/archive/master.zip).
 
-run 
+just run main.py using the following command 
+```bash
+python main.py
+```
+Input the URL of the Subject (for example, "https://www.sanfoundry.com/1000-object-oriented-programming-oops-questions-answers/") and run it to get a file in a folder named
+`Saved_MCQs` of all the MCQs of the subject.
+
+
+
+run the following command if you are using the program for the first time.
 ```bash
 pip install bs4 requests
 ```
 to install requirements
- requires python 3.6.5 minimum
