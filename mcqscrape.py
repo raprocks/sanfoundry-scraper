@@ -1,15 +1,12 @@
 import os
 import requests
 from bs4 import BeautifulSoup
-from pprint import pprint
-
-from requests.api import head
 
 
-def write_to_html(data, filename, group_name):
-    if not os.path.exists(group_name):
-        os.mkdir(group_name)
-    with open(f"./{group_name}/{filename}.html", "w+", encoding="utf-8") as file:
+def write_to_html(data, filename):
+    if not os.path.exists("Saved_MCQs"):
+        os.mkdir("Saved_MCQs")
+    with open(f"./Saved_MCQs/{filename}.html", "w+", encoding="utf-8") as file:
         file.write(str(data))
 
 
@@ -22,6 +19,7 @@ def mcqscrape_json(url: str):
     paras = content.findAll('p')
     header = paras[0].text
     print(header)
+    each = ''
     try:
         for each in paras[1:-3]:
             answerid = each.span['id']
@@ -43,12 +41,13 @@ def mcqscrape_json(url: str):
                 "explanation": explanation
             }
             mcqs.append(question_dict)
-    except:
+    except Exception as err:
         print("current iteration has ", each)
+        print("Error: ", err)
     return mcqs
 
 
-def mcqscrape_html(url: str, group_name: str) -> None:
+def mcqscrape_html(url: str) -> str:
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'lxml')
     content = soup.find('div', class_='entry-content')
@@ -61,7 +60,8 @@ def mcqscrape_html(url: str, group_name: str) -> None:
     # remove the answer drop downs
     [sp.decompose() for sp in content.findAll('span', class_="collapseomatic")]
     for class_to_remove in classes_to_remove:
-        [sp.decompose() for sp in content.findAll('div', class_=class_to_remove)]
+        [sp.decompose() for sp in content.findAll('div',
+                                                  class_=class_to_remove)]
     for tag_to_remove in tags_to_remove:
         [sp.decompose() for sp in content.findAll(tag_to_remove)]
     for tag in paras[-3:]:
@@ -72,11 +72,10 @@ def mcqscrape_html(url: str, group_name: str) -> None:
     for tag in content.findAll(True):
         tag.attrs.pop("class", "")
         tag.attrs.pop("id", "")
-    write_to_html(BeautifulSoup(content.prettify(), 'lxml').prettify(),
-                  heading,
-                  group_name)
+    return content.prettify()
 
 
 if __name__ == '__main__':
-    pprint(mcqscrape_html(
-        'https://www.sanfoundry.com/object-oriented-programming-questions-answers-object-reference/'))
+    pass
+    # pprint(mcqscrape_html(
+    #     'https://www.sanfoundry.com/object-oriented-programming-questions-answers-object-reference/'))
