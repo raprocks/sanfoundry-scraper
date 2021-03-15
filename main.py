@@ -1,9 +1,13 @@
 
+import sys
 from pagescrape import pagescrape
 from mcqscrape import mcqscrape_html, write_to_html
 from bs4 import BeautifulSoup
-PAGE_URL = "https://www.sanfoundry.com/1000-object-oriented-programming-oops-questions-answers/"  # noqa: E501
+PAGE_URL = input("Enter the URL of the Page where you see links of all Subject related MCQs: ") # noqa: E501
 
+if PAGE_URL == '':
+    print("Please Enter a URL!")
+    sys.exit()
 pages = pagescrape(PAGE_URL)
 mega_html = ''
 with open('downloaded.json', 'w+') as fd:
