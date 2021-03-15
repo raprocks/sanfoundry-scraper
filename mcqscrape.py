@@ -14,7 +14,7 @@ def mcqscrape_json(url: str):
     # print(title)
     mcqs = []
     res = requests.get(url)
-    soup = BeautifulSoup(res.content, 'lxml')
+    soup = BeautifulSoup(res.content, 'html5lib')
     content = soup.find('div', 'entry-content')
     paras = content.findAll('p')
     header = paras[0].text
@@ -49,7 +49,7 @@ def mcqscrape_json(url: str):
 
 def mcqscrape_html(url: str) -> str:
     res = requests.get(url)
-    soup = BeautifulSoup(res.content, 'lxml')
+    soup = BeautifulSoup(res.content, 'html5lib')
     content = soup.find('div', class_='entry-content')
     heading = soup.find('h1', class_="entry-title").text.split('–')[1].strip()
     print(heading)
@@ -73,9 +73,4 @@ def mcqscrape_html(url: str) -> str:
         tag.attrs.pop("class", "")
         tag.attrs.pop("id", "")
     return content.prettify()
-
-
-if __name__ == '__main__':
-    pass
-    # pprint(mcqscrape_html(
-    #     'https://www.sanfoundry.com/object-oriented-programming-questions-answers-object-reference/'))
+    

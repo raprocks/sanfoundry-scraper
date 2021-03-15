@@ -6,7 +6,7 @@ Change PAGE_URL in main.py and run it to get a folder of all the mcqs of the sub
 
 run 
 ```bash
-pip install bs4 requests lxml
+pip install bs4 requests
 ```
 to install requirements
  requires python 3.6.5 minimum
