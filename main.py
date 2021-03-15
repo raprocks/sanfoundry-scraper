@@ -2,8 +2,7 @@
 from pagescrape import pagescrape
 from mcqscrape import mcqscrape_html, write_to_html
 from bs4 import BeautifulSoup
-PAGE_URL = "https://www.sanfoundry.com/1000-object\
-    -oriented-programming-oops-questions-answers/"
+PAGE_URL = "https://www.sanfoundry.com/1000-object-oriented-programming-oops-questions-answers/"  # noqa: E501
 
 pages = pagescrape(PAGE_URL)
 mega_html = ''
