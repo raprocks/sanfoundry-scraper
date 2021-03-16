@@ -15,5 +15,5 @@ with open('downloaded.json', 'w+') as fd:
         print("getting", k, "from ->", v, end=' ... ')
         mega_html += mcqscrape_html(v)
         print("Done!")
-    write_to_html(BeautifulSoup(mega_html, 'lxml').prettify(),
+    write_to_html(BeautifulSoup(mega_html, 'html5lib').prettify(),
                   PAGE_URL.split('/')[-2])
