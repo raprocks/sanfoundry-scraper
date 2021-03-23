@@ -15,6 +15,6 @@ Input the URL of the Subject (for example, "https://www.sanfoundry.com/1000-obje
 
 run the following command if you are using the program for the first time.
 ```bash
-pip install bs4 requests
+pip install bs4 requests lxml
 ```
 to install requirements
