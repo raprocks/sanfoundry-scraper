@@ -1,3 +1,4 @@
+from pagescrape import pagescrape
 import os
 import requests
 from bs4 import BeautifulSoup
@@ -14,7 +15,7 @@ def mcqscrape_json(url: str):
     # print(title)
     mcqs = []
     res = requests.get(url)
-    soup = BeautifulSoup(res.content, 'html5lib')
+    soup = BeautifulSoup(res.content, 'lxml')
     content = soup.find('div', 'entry-content')
     paras = content.findAll('p')
     header = paras[0].text
@@ -48,11 +49,18 @@ def mcqscrape_json(url: str):
 
 
 def mcqscrape_html(url: str) -> str:
+    if '1000' in url:
+        pages = pagescrape(url)
+        mega_html = ''
+        for k, v in pages.items():
+            print("getting", k, "from ->", v, end=' ... ')
+            mega_html += mcqscrape_html(v)
+            print("Done!")
+        write_to_html(BeautifulSoup(mega_html, 'lxml').prettify(),
+                      url.split('/')[-2])
     res = requests.get(url)
-    soup = BeautifulSoup(res.content, 'html5lib')
+    soup = BeautifulSoup(res.content, 'lxml')
     content = soup.find('div', class_='entry-content')
-    heading = soup.find('h1', class_="entry-title").text.split('–')[1].strip()
-    print(heading)
     paras = content.findAll('p')
     classes_to_remove = ["sf-mobile-ads",
                          "desktop-content", "mobile-content", "sf-nav-bottom"]
@@ -72,5 +80,11 @@ def mcqscrape_html(url: str) -> str:
     for tag in content.findAll(True):
         tag.attrs.pop("class", "")
         tag.attrs.pop("id", "")
+    try:
+        heading = soup.find('h1', class_="entry-title").text.split('–')[1].strip()
+        print(heading)
+    except IndexError:
+        print("cant get heading", IndexError)
+        print(str(content))
+        return ''
     return content.prettify()
-    

@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 def pagescrape(url: str) -> Dict[str, str]:
     res = requests.get(url)
-    soup = BeautifulSoup(res.content, 'html5lib')
+    soup = BeautifulSoup(res.content, 'lxml')
     content = soup.find('div', class_='entry-content')
     sf_contents = content.findAll('div', class_='sf-section')
     filtered_sf_content = [
