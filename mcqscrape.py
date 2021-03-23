@@ -30,11 +30,10 @@ def write_to_html(data: BeautifulSoup, filename):
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     </head>""", "lxml")
-    head_tag = data.new_tag('head')
     data.body.insert_before(head)
-    print(data)
+    # print(data)
     with open(f"./Saved_MCQs/{filename}.html", "w+", encoding="utf-8") as file:
-        file.write(str(data))
+        file.write(str(data.prettify()))
 
 
 def mcqscrape_json(url: str):
@@ -82,12 +81,12 @@ def mcqscrape_html(url: str) -> str:
             print("getting", k, "from ->", v, end=' ... ')
             mega_html += mcqscrape_html(v)
             print("Done!")
-        write_to_html(BeautifulSoup(mega_html, 'lxml').prettify(),
+        write_to_html(BeautifulSoup(mega_html, 'lxml'),
                       url.split('/')[-2])
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'lxml')
     content = soup.find('div', class_='entry-content')
-    print(content.prettify())
+    # print(content.prettify())
     paras = content.findAll('p')
     classes_to_remove = ["sf-mobile-ads",
                          "desktop-content", "mobile-content", "sf-nav-bottom"]
@@ -104,16 +103,16 @@ def mcqscrape_html(url: str) -> str:
     [tag.extract() for tag in content.find_all(
         "div") if tag.text == "advertisement"]
     # span attribute cleanup
-    # for tag in content.findAll(True):
-    #     tag.attrs.pop("class", "")
-    #     tag.attrs.pop("id", "")
+    for tag in content.findAll(True):
+        tag.attrs.pop("class", "")
+        tag.attrs.pop("id", "")
     try:
         heading = soup.find(
             'h1', class_="entry-title").text.split('–')[1].strip()
         print(heading)
     except IndexError:
         print("cant get heading", IndexError)
-        print(str(content))
+        print(str(content)[:100])
         return ''
     return content.prettify()
 

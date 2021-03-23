@@ -16,7 +16,7 @@ def main(url: str):
         print("getting", k, "from ->", v, end=' ... ')
         mega_html += mcqscrape_html(v)
         print("Done!")
-    write_to_html(BeautifulSoup(mega_html, 'html5lib').prettify(),
+    write_to_html(BeautifulSoup(mega_html, 'lxml'),
                   PAGE_URL.split('/')[-2])
 
 
