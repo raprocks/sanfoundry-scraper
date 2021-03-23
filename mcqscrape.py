@@ -1,12 +1,38 @@
+import bs4
 from pagescrape import pagescrape
 import os
 import requests
 from bs4 import BeautifulSoup
 
 
-def write_to_html(data, filename):
+def write_to_html(data: BeautifulSoup, filename):
     if not os.path.exists("Saved_MCQs"):
         os.mkdir("Saved_MCQs")
+    # add mathjax
+    #  <script>
+    #   MathJax = {
+    #     tex: {
+    #       inlineMath: [['$', '$'], ['\\(', '\\)']]
+    #     }
+    #   };
+    # </script>
+    # <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    # </script>
+    head = BeautifulSoup("""
+    <head>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+    </script>
+    </head>""", "lxml")
+    head_tag = data.new_tag('head')
+    data.body.insert_before(head)
+    print(data)
     with open(f"./Saved_MCQs/{filename}.html", "w+", encoding="utf-8") as file:
         file.write(str(data))
 
@@ -61,6 +87,7 @@ def mcqscrape_html(url: str) -> str:
     res = requests.get(url)
     soup = BeautifulSoup(res.content, 'lxml')
     content = soup.find('div', class_='entry-content')
+    print(content.prettify())
     paras = content.findAll('p')
     classes_to_remove = ["sf-mobile-ads",
                          "desktop-content", "mobile-content", "sf-nav-bottom"]
@@ -77,14 +104,20 @@ def mcqscrape_html(url: str) -> str:
     [tag.extract() for tag in content.find_all(
         "div") if tag.text == "advertisement"]
     # span attribute cleanup
-    for tag in content.findAll(True):
-        tag.attrs.pop("class", "")
-        tag.attrs.pop("id", "")
+    # for tag in content.findAll(True):
+    #     tag.attrs.pop("class", "")
+    #     tag.attrs.pop("id", "")
     try:
-        heading = soup.find('h1', class_="entry-title").text.split('–')[1].strip()
+        heading = soup.find(
+            'h1', class_="entry-title").text.split('–')[1].strip()
         print(heading)
     except IndexError:
         print("cant get heading", IndexError)
         print(str(content))
         return ''
     return content.prettify()
+
+
+if __name__ == "__main__":
+    write_to_html(BeautifulSoup(mcqscrape_html(
+        'https://www.sanfoundry.com/engineering-mathematics-questions-answers-nth-derivative-some-elementary-functions-1/'), 'lxml'), "test.html")
