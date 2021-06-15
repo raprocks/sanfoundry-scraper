@@ -24,7 +24,7 @@ python main.py --url {url-of-quiz} --thread --workers 15
 
 Here workers are the number of threads. Default workers are 5 .
 
-You can change by passing `--workers {thread-choice} .
+You can change by passing `--workers {thread-choice}` .
 
 More workers can cause unstability
 
