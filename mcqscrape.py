@@ -117,6 +117,3 @@ def mcqscrape_html(url: str) -> str:
     return content.prettify()
 
 
-if __name__ == "__main__":
-    write_to_html(BeautifulSoup(mcqscrape_html(
-        'https://www.sanfoundry.com/engineering-mathematics-questions-answers-nth-derivative-some-elementary-functions-1/'), 'lxml'), "test.html")
