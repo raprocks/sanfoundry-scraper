@@ -1,8 +1,7 @@
-
 import sys
 from pagescrape import pagescrape
-from mcqscrape import mcqscrape_html, write_to_html
 from bs4 import BeautifulSoup
+from mcqscrape import mcqscrape_html, write_to_html
 PAGE_URL = input("Enter the URL of the Page where you see links of all Subject related MCQs: ")  # noqa: E501
 
 
@@ -12,9 +11,9 @@ def main(url: str):
         sys.exit()
     pages = pagescrape(url)
     mega_html = ''
-    for k, v in pages.items():
-        print("getting", k, "from ->", v, end=' ... ')
-        mega_html += mcqscrape_html(v)
+    for PageTitle, PageUrl in pages.items():
+        print("getting", PageTitle, "from ->", PageUrl, end=' ... ')
+        mega_html += mcqscrape_html(PageUrl)
         print("Done!")
     write_to_html(BeautifulSoup(mega_html, 'lxml'),
                   PAGE_URL.split('/')[-2])
