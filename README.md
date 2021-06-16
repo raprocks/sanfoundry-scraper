@@ -10,6 +10,24 @@ just run main.py using the following command
 python main.py
 ```
 
+or
+
+```bash
+python main.py --url {url-of-quiz}
+```
+
+this scrapper also uses multithreading
+
+```bash
+python main.py --url {url-of-quiz} --thread --workers 15
+```
+
+Here workers are the number of threads. Default workers are 5 .
+
+You can change by passing `--workers {thread-choice}` .
+
+More workers can cause unstability
+
 Input the URL of the Subject (for example, "https://www.sanfoundry.com/1000-object-oriented-programming-oops-questions-answers/") and run it to get a file in a folder named
 `Saved_MCQs` of all the MCQs of the subject.
 
@@ -17,6 +35,12 @@ run the following command if you are using the program for the first time.
 
 ```bash
 pip install -r requirements.txt
+```
+
+and
+
+```bash
+python main.py --help
 ```
 
 to install requirements
