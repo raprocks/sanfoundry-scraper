@@ -16,6 +16,6 @@ def pagescrape(url: str) -> Dict[str, str]:
     links = {}
     for table in tables:
         hrefs = {link.text.strip().replace(
-            " ", '-'): link["href"] for link in table.findAll('a')}
+            " ", '-'): link["href"] for link in table.findAll('a') if link.has_attr('href')}
         links.update(hrefs)
     return links
