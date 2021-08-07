@@ -1,5 +1,5 @@
 import bs4
-from pagescrape import pagescrape
+from .pagescrape import pagescrape
 import os
 import requests
 from bs4 import BeautifulSoup
