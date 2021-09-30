@@ -48,6 +48,5 @@ to install requirements
 LOG: This is getting traction hehe so gonna make it better to use and better at output
 
 1. PDF Output instead of HTML or maybe optional idk
-2. setup script so that installable from pip
-3. good docs 💀
-4. plain text output format with just questions and answers in txt. easier to "study" xD.
+2. good docs 💀
+3. plain text output format with just questions and answers in txt. easier to "study" xD.
